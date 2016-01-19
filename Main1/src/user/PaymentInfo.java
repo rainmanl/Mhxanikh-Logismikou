@@ -62,7 +62,7 @@ public class PaymentInfo {
 		frmPaymentinfo.getContentPane().add(lblEnterYourBank);
 
 		JLabel lblDefaultValueFor = new JLabel(
-				"<html>(Default values for Credit Card Number<br>\r\nand Bank Account Number is null.)</html>");
+				"<html>(Default values for Credit Card Number<br>\r\nand Bank Account Number are null.)</html>");
 		lblDefaultValueFor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDefaultValueFor.setFont(new Font("Tahoma", Font.ITALIC, 15));
 		lblDefaultValueFor.setBounds(10, 232, 447, 50);
