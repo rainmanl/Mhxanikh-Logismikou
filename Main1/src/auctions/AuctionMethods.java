@@ -106,7 +106,7 @@ public class AuctionMethods {
 			}
 
 			if (name.equals(name1)) {
-				String query1 = "UPDATE auctions SET name=?, startbid=?, category=? WHERE name=?";
+				String query1 = "UPDATE auctions SET name=?, startbid=?, category=?, lastbid=? WHERE name=?";
 
 				try {
 
@@ -116,6 +116,8 @@ public class AuctionMethods {
 					statement1.setString(2, bid);
 					statement1.setString(3, cat);
 					statement1.setString(4, name);
+					statement1.setString(5, bid);
+
 					statement1.execute();
 
 				} catch (SQLException e1) {
@@ -152,7 +154,8 @@ public class AuctionMethods {
 		Connection conn = DBconnect.connect();
 
 		String name1 = null;
-
+		String user = MainMethods.loggeduser(); 
+				
 		try {
 			String query = "SELECT name FROM auctions WHERE name=? ";
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -165,14 +168,15 @@ public class AuctionMethods {
 				name1 = rs.getString("name");
 			}
 
-			if (name.equals(name1)) {
+			if (name.equals(name1) ){
 
-				String query1 = "DELETE FROM auctions WHERE name=?";
+				String query1 = "DELETE FROM auctions WHERE name=? and creator = ?";
 
 				try {
 
 					PreparedStatement statement1 = conn.prepareStatement(query1);
 					statement1.setString(1, name);
+					statement1.setString(2, user);
 
 					statement1.execute();
 

@@ -1,2 +1,0 @@
-# Mhxanikh-Logismikou
-yolo

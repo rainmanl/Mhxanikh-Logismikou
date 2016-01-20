@@ -79,7 +79,7 @@ public class MainMethods {
 	 */
 	public static void adminlogin(String usr, String pw) {
 
-		if (usr.equals("admin") || pw.equals("admin")) {
+		if (usr.equals("admin") && pw.equals("admin")) {
 
 			@SuppressWarnings("unused")
 			Admin Admin = new Admin();
