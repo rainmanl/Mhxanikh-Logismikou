@@ -72,6 +72,10 @@ public class AuctionSearch {
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+				model.setRowCount(0);
+
 				String category = textField.getText();
 				String above = textField_1.getText();
 				String below = textField_2.getText();

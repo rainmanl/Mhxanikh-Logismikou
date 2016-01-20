@@ -3,6 +3,10 @@ package admin;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import auctions.AuctionMethods;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -15,6 +19,8 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.JTable;
+import javax.swing.JTextPane;
 
 public class Admin {
 
@@ -23,6 +29,7 @@ public class Admin {
 	private JTextField textField_2;
 	private JTextField textField_4;
 	private JTextField textField_1;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -42,7 +49,7 @@ public class Admin {
 		JFrame frmAdmin = new JFrame();
 		frmAdmin.setResizable(false);
 		frmAdmin.setTitle("Admin");
-		frmAdmin.setBounds(100, 100, 442, 428);
+		frmAdmin.setBounds(100, 100, 442, 556);
 		frmAdmin.getContentPane().setLayout(null);
 		frmAdmin.setVisible(true);
 		frmAdmin.setLocationRelativeTo(null);
@@ -96,7 +103,7 @@ public class Admin {
 				frmAdmin.dispose();
 			}
 		});
-		btnLogot.setBounds(245, 336, 184, 50);
+		btnLogot.setBounds(245, 467, 184, 50);
 		frmAdmin.getContentPane().add(btnLogot);
 
 		JButton btnStats = new JButton("Statistics");
@@ -108,7 +115,7 @@ public class Admin {
 
 			}
 		});
-		btnStats.setBounds(10, 336, 184, 50);
+		btnStats.setBounds(10, 467, 184, 50);
 		frmAdmin.getContentPane().add(btnStats);
 
 		JPanel panel_1 = new JPanel();
@@ -148,12 +155,12 @@ public class Admin {
 		panel_2.setToolTipText("Edit Category");
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Edit Category",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(10, 180, 282, 145);
+		panel_2.setBounds(10, 180, 282, 276);
 		frmAdmin.getContentPane().add(panel_2);
 
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(10, 111, 187, 23);
+		textField_4.setBounds(10, 111, 136, 23);
 		panel_2.add(textField_4);
 
 		JButton btnEdit = new JButton("Edit");
@@ -169,31 +176,59 @@ public class Admin {
 			}
 		});
 		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnEdit.setBounds(205, 59, 67, 46);
+		btnEdit.setBounds(32, 145, 99, 35);
 		panel_2.add(btnEdit);
 
 		JLabel lblEnterExistingCategory = new JLabel("Enter Existing Category Name");
-		lblEnterExistingCategory.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEnterExistingCategory.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblEnterExistingCategory.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnterExistingCategory.setBounds(10, 11, 187, 23);
+		lblEnterExistingCategory.setBounds(10, 11, 144, 23);
 		panel_2.add(lblEnterExistingCategory);
 
 		JLabel lblEnterNewCategory = new JLabel("Enter New Category Name");
 		lblEnterNewCategory.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnterNewCategory.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblEnterNewCategory.setBounds(10, 77, 187, 23);
+		lblEnterNewCategory.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblEnterNewCategory.setBounds(10, 77, 136, 23);
 		panel_2.add(lblEnterNewCategory);
 
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(10, 43, 187, 23);
+		textField_1.setBounds(10, 43, 136, 23);
 		panel_2.add(textField_1);
+
+		table = new JTable();
+		table.setEnabled(false);
+		table.setBounds(164, 37, 108, 190);
+		panel_2.add(table);
+
+		AuctionMethods.catlist(table);
+
+		JTextPane txtpnCategoryList = new JTextPane();
+		txtpnCategoryList.setText("Category List");
+		txtpnCategoryList.setForeground(Color.WHITE);
+		txtpnCategoryList.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtpnCategoryList.setEditable(false);
+		txtpnCategoryList.setBackground(Color.DARK_GRAY);
+		txtpnCategoryList.setBounds(164, 15, 108, 19);
+		panel_2.add(txtpnCategoryList);
+
+		JButton btnUpdateList = new JButton("Update List");
+		btnUpdateList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.setRowCount(0);
+				AuctionMethods.catlist(table);
+
+			}
+		});
+		btnUpdateList.setBounds(164, 238, 109, 27);
+		panel_2.add(btnUpdateList);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setToolTipText("Enable or disable user ratings");
 		panel_3.setBorder(new TitledBorder(null, "User Ratings", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(303, 180, 127, 145);
+		panel_3.setBounds(302, 273, 127, 145);
 		frmAdmin.getContentPane().add(panel_3);
 
 		JButton button_1 = new JButton("Enable");
