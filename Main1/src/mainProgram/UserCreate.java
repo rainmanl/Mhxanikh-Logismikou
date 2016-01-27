@@ -46,7 +46,7 @@ public class UserCreate {
 		textField.setColumns(10);
 		frmCreateNewUser.getContentPane().add(textField);
 
-		textField_1 = new JTextField();
+		textField_1 = new JTextField(); 
 		textField_1.setBounds(251, 90, 170, 30);
 		textField_1.setColumns(10);
 		frmCreateNewUser.getContentPane().add(textField_1);
