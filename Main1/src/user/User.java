@@ -29,6 +29,7 @@ public class User {
 	 */
 	private void initialize() {
 		JFrame frmUser = new JFrame();
+		frmUser.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmUser.setResizable(false);
 		frmUser.setTitle("User");
 		frmUser.setBounds(100, 100, 460, 384);
@@ -126,7 +127,9 @@ public class User {
 		btnRateUser.setBounds(10, 243, 432, 45);
 		frmUser.getContentPane().add(btnRateUser);
 
-		AdminMethods.setratings(btnRateUser);
+		// calling method for setting button enabled/disabled
+		AdminMethods.getbuttonstate();
+		AdminMethods.buttonset(btnRateUser);
 
 	}
 }

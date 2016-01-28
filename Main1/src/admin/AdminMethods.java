@@ -12,15 +12,15 @@ import mainProgram.Error;
 public class AdminMethods {
 
 	/**
-	 * μεθοδος σημιουργιας κατηγοριας
+	 * method of creating a category
 	 * 
 	 * @param cat
 	 */
 	public static void catcreate(String cat) {
-		Connection conn = DBconnect.connect();
 
 		try {
 
+			Connection conn = DBconnect.connect();
 			String query = "INSERT INTO category(name) VALUES (?)";
 			PreparedStatement statement;
 
@@ -40,15 +40,14 @@ public class AdminMethods {
 	}
 
 	/**
-	 * μεθοδος διαγραφης κατηγοριας
+	 * method of category deletion
 	 * 
 	 * @param cat
 	 */
 	public static void catdelete(String cat) {
-		Connection conn = DBconnect.connect();
 
 		try {
-
+			Connection conn = DBconnect.connect();
 			String query = "DELETE FROM category WHERE name = ?";
 			PreparedStatement statement;
 
@@ -68,13 +67,14 @@ public class AdminMethods {
 	}
 
 	/**
-	 * επεξεργασια κατηγοριας
+	 * method of editing a category
 	 */
 	public static void catedit(String name, String newname) {
-		Connection conn = DBconnect.connect();
+
 		if (name != null) {
 			try {
 
+				Connection conn = DBconnect.connect();
 				String query = "UPDATE category SET name=? WHERE name = ?";
 				PreparedStatement statement;
 
@@ -98,21 +98,19 @@ public class AdminMethods {
 	}
 
 	/**
-	 * μεθοδος παραμετροποιησης χρονικης διαρκειας δημοπρασιων
+	 * method of editing/setting the duration of the auctions
 	 * 
 	 * @param time
 	 */
-	public static void timeset(String time) {
-
-		Connection conn = DBconnect.connect();
+	public static void timeset(long date) {
 
 		try {
-
+			Connection conn = DBconnect.connect();
 			String query = "UPDATE auctions SET time=?";
 			PreparedStatement statement;
 
 			statement = conn.prepareStatement(query);
-			statement.setString(1, time);
+			statement.setLong(1, date);
 			statement.execute();
 
 		} catch (SQLException e1) {
@@ -126,11 +124,12 @@ public class AdminMethods {
 	}
 
 	/**
-	 * μεθοδος εμγανισης λιστας δημοπρασιων στο παραθυρο των στατιστικων
+	 * method that shows full auction list
 	 * 
 	 * @param table
 	 */
 	public static void auctionlist(JTable table) {
+
 		Connection conn = null;
 		String query = null;
 		PreparedStatement statement = null;
@@ -142,8 +141,11 @@ public class AdminMethods {
 
 		try {
 			conn = DBconnect.connect();
-			query = "select name, category, startbid, time, creator, lastbidder, lastbid, sumofbidders from auctions";
+			query = "SELECT name, category, startbid, time, creator, lastbidder, lastbid, sumofbidders FROM auctions";
+
 			statement = conn.prepareStatement(query);
+
+			statement.execute();
 			rs = statement.executeQuery();
 
 			ResultSetMetaData meta = rs.getMetaData();
@@ -184,30 +186,208 @@ public class AdminMethods {
 	}
 
 	/**
-	 * απο κατω ειναι οι μεθοδοι για ενεργοποιηση/απενεργοποιηση
-	 * (enable/disable) της λειτουργιας βαθμολογησης πωλητη απο αλλους χρηστες
+	 * here is the method for enabling/disabling the rating function on users
+	 * practically this method, enables or disables the "Rate User" in
+	 * user.User.java
+	 *
 	 */
-	public static boolean bool = false;
+	public static String bool = null;
 
-	public static void buttonenable() {
+	public static void getbuttonstate() {
+		Connection conn = null;
+		String query = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
 
-		bool = false;
+		try {
+			conn = DBconnect.connect();
+			query = "SELECT state FROM ratingonoff WHERE id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setString(1, "1");
+			statement.execute();
 
-	}
+			rs = statement.executeQuery();
 
-	public static void buttondisable() {
-
-		bool = true;
-
-	}
-
-	// καλειται στο UI του χρηστη για να θεσει το κουμπι ενεργο ή ανενεργο
-	public static void setratings(JButton button) {
-		if (bool == true) {
-			button.setEnabled(false);
-		} else {
-			button.setEnabled(true);
+			while (rs.next()) {
+				bool = rs.getString("state");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			@SuppressWarnings("unused")
+			Error error = new Error();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+				}
+			if (statement != null)
+				try {
+					statement.close();
+				} catch (Exception e) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					DBconnect.closeconn();
+				}
 		}
 	}
 
+	public static void enablerate() {
+		Connection conn = null;
+		String query = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBconnect.connect();
+			query = "SELECT state FROM ratingonoff WHERE id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setString(1, "1");
+			statement.execute();
+
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				bool = rs.getString("state");
+			}
+
+			if (bool.equals("false")) {
+				String query1 = null;
+				PreparedStatement statement1 = null;
+				try {
+
+					query1 = "UPDATE ratingonoff SET state = ?  WHERE id = ?";
+
+					statement1 = conn.prepareStatement(query1);
+					statement1.setString(1, "true");
+					statement1.setString(2, "1");
+					statement1.execute();
+
+					bool = "true";
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					@SuppressWarnings("unused")
+					Error error = new Error();
+				} finally {
+					if (statement1 != null)
+						try {
+							statement.close();
+						} catch (Exception e) {
+						}
+				}
+
+			} else {
+				@SuppressWarnings("unused")
+				Error error = new Error();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			@SuppressWarnings("unused")
+			Error error = new Error();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+				}
+			if (statement != null)
+				try {
+					statement.close();
+				} catch (Exception e) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					DBconnect.closeconn();
+				}
+		}
+
+	}
+
+	public static void disablerate() {
+		Connection conn = null;
+		String query = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBconnect.connect();
+			query = "SELECT state FROM ratingonoff WHERE id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setString(1, "1");
+			statement.execute();
+
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				bool = rs.getString("state");
+			}
+
+			if (bool.equals("true")) {
+				String query1 = null;
+				PreparedStatement statement1 = null;
+				try {
+
+					query1 = "UPDATE ratingonoff SET state = ?  WHERE id = ?";
+
+					statement1 = conn.prepareStatement(query1);
+					statement1.setString(1, "false");
+					statement1.setString(2, "1");
+					statement1.execute();
+
+					bool = "false";
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					@SuppressWarnings("unused")
+					Error error = new Error();
+				} finally {
+					if (statement1 != null)
+						try {
+							statement.close();
+						} catch (Exception e) {
+						}
+				}
+
+			} else {
+				@SuppressWarnings("unused")
+				Error error = new Error();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			@SuppressWarnings("unused")
+			Error error = new Error();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+				}
+			if (statement != null)
+				try {
+					statement.close();
+				} catch (Exception e) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+					DBconnect.closeconn();
+				}
+		}
+
+	}
+
+	public static void buttonset(JButton button) {
+		if (bool.equals("true")) {
+			button.setEnabled(true);
+		} else {
+			button.setEnabled(false);
+		}
+	}
 }

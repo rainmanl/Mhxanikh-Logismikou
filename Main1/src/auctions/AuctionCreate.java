@@ -9,13 +9,17 @@ import javax.swing.table.DefaultTableModel;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 
 public class AuctionCreate {
-
 
 	private JTextField textField;
 	private JTextField textField_2;
@@ -94,7 +98,19 @@ public class AuctionCreate {
 				String itemname = textField.getText();
 				String bid = textField_1.getText();
 				String category = textField_2.getText();
-				AuctionMethods.createauction(itemname, bid, category);
+
+				String date = textField_3.getText();
+				DateFormat date1 = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+				Date date2 = null;
+				try {
+					date2 = date1.parse(date);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				long date3 = date2.getTime();
+
+				AuctionMethods.createauction(itemname, bid, category, date3);
 
 				frmCreateAuction.dispose();
 

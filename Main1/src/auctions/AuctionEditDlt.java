@@ -129,7 +129,7 @@ public class AuctionEditDlt {
 				String newname = textField_1.getText();
 				String bid = textField_2.getText();
 				String category = textField_3.getText();
-				AuctionMethods.auctionedit(name, newname, bid, category);
+				AuctionMethods.editauction(name, newname, bid, category);
 
 				frmEditdeleteAuciton.dispose();
 

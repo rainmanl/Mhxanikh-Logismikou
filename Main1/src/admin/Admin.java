@@ -10,6 +10,11 @@ import auctions.AuctionMethods;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
 import java.awt.Font;
@@ -47,6 +52,7 @@ public class Admin {
 	 */
 	private void initialize() {
 		JFrame frmAdmin = new JFrame();
+		frmAdmin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmAdmin.setResizable(false);
 		frmAdmin.setTitle("Admin");
 		frmAdmin.setBounds(100, 100, 442, 556);
@@ -129,8 +135,19 @@ public class Admin {
 		JButton btnSetTime = new JButton("Set Time");
 		btnSetTime.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String time = textField_3.getText();
-				AdminMethods.timeset(time);
+
+				String date = textField_3.getText();
+				DateFormat date1 = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+				Date date2 = null;
+				try {
+					date2 = date1.parse(date);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				long date3 = date2.getTime();
+
+				AdminMethods.timeset(date3);
 				textField_3.setText(null);
 
 			}
@@ -234,7 +251,7 @@ public class Admin {
 		JButton button_1 = new JButton("Enable");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AdminMethods.buttonenable();
+				AdminMethods.enablerate();
 			}
 		});
 		button_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -244,7 +261,7 @@ public class Admin {
 		JButton button_2 = new JButton("Disable");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminMethods.buttondisable();
+				AdminMethods.disablerate();
 
 			}
 		});

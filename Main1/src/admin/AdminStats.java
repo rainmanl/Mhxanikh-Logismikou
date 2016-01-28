@@ -51,10 +51,9 @@ public class AdminStats {
 		frmStatistics.getContentPane().add(panel_2);
 
 		table = new JTable();
+		table.setFillsViewportHeight(true);
 		table.setSurrendersFocusOnKeystroke(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setFillsViewportHeight(true);
-		table.setEnabled(false);
 		table.setColumnSelectionAllowed(true);
 		table.setCellSelectionEnabled(true);
 		table.setBounds(11, 72, 1040, 272);

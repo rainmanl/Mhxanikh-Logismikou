@@ -11,15 +11,15 @@ public class MainMethods {
 	public static String admin = null;
 
 	/**
-	 * μεθοδος για συνδεση χρηστη
+	 * method of connecting the user
 	 * 
 	 * @param usr
 	 * @param pw
 	 */
 	public static void usrlogin(String usr, String pw) {
-		Connection conn = DBconnect.connect();
-
 		try {
+			Connection conn = DBconnect.connect();
+
 			String query = "SELECT username, password FROM users WHERE username = ? AND password = ?";
 
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -54,7 +54,7 @@ public class MainMethods {
 	}
 
 	/**
-	 * μεθοδος για εμφανιση και αποθηκευση συνδεδεμενου χρηστη
+	 * method which saves the connected username
 	 * 
 	 * @return
 	 */
@@ -64,7 +64,7 @@ public class MainMethods {
 	}
 
 	/**
-	 * μεθοδος για αποσυνδεση χρηστη
+	 * method that disconnects the user
 	 */
 	public static void userlogout() {
 		user = null;
@@ -72,7 +72,7 @@ public class MainMethods {
 	}
 
 	/**
-	 * μεθοδος για συνδεση του διαχειριστη
+	 * method that connects the administrator
 	 * 
 	 * @param usr
 	 * @param pw
@@ -91,10 +91,70 @@ public class MainMethods {
 	}
 
 	/**
-	 * μεθοδος για αποσυνδεση του διαχειριστη
+	 * method that disconnects the administrator
 	 */
 	public static void adminlogout() {
 		admin = null;
+	}
+
+	/**
+	 * method of user creation
+	 * 
+	 * @param usr
+	 * @param pw
+	 * @param mail
+	 * @param addr
+	 * @param mbl
+	 */
+	public static void createuser(String usr, String pw, String mail, String addr, String mbl) {
+
+		Connection conn = null;
+		String query = null;
+		String query1 = null;
+		PreparedStatement statement = null;
+		PreparedStatement statement1 = null;
+
+		try {
+			conn = DBconnect.connect();
+			query = "INSERT INTO users (username, password, email, address, mobile, score) VALUES (?, ?, ?, ?, ?, 0)";
+			query1 = "INSERT INTO paymentinfo (username) VALUES (?)";
+
+			statement = conn.prepareStatement(query);
+			statement.setString(1, usr);
+			statement.setString(2, pw);
+			statement.setString(3, mail);
+			statement.setString(4, addr);
+			statement.setString(5, mbl);
+
+			statement.execute();
+
+			statement1 = conn.prepareStatement(query1);
+			statement1.setString(1, usr);
+			statement1.execute();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			@SuppressWarnings("unused")
+			Error error = new Error();
+
+		} finally {
+
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+			if (conn != null) {
+				DBconnect.closeconn();
+			}
+
+		}
+
 	}
 
 }

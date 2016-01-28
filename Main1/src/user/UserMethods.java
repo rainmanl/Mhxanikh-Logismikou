@@ -15,67 +15,7 @@ import mainProgram.Error;
 public class UserMethods {
 
 	/**
-	 * μεθοδος δημιουργιας χρηστη
-	 * 
-	 * @param usr
-	 * @param pw
-	 * @param mail
-	 * @param addr
-	 * @param mbl
-	 */
-	public static void createuser(String usr, String pw, String mail, String addr, String mbl) {
-
-		Connection conn = null;
-		String query = null;
-		String query1 = null;
-		PreparedStatement statement = null;
-		PreparedStatement statement1 = null;
-
-		try {
-			conn = DBconnect.connect();
-			query = "INSERT INTO users (username, password, email, address, mobile, score) VALUES (?, ?, ?, ?, ?, 0)";
-			query1 = "INSERT INTO paymentinfo (username) VALUES (?)";
-
-			statement = conn.prepareStatement(query);
-			statement.setString(1, usr);
-			statement.setString(2, pw);
-			statement.setString(3, mail);
-			statement.setString(4, addr);
-			statement.setString(5, mbl);
-
-			statement.execute();
-
-			statement1 = conn.prepareStatement(query1);
-			statement1.setString(1, usr);
-			statement1.execute();
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-			@SuppressWarnings("unused")
-			Error error = new Error();
-
-		} finally {
-
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-
-					e.printStackTrace();
-				}
-			}
-
-			if (conn != null) {
-				DBconnect.closeconn();
-			}
-
-		}
-
-	}
-
-	/**
-	 * μεθοδος επεξεργασιας χρηστη
+	 * method of editing user
 	 * 
 	 * @param usr
 	 * @param pw
@@ -85,14 +25,21 @@ public class UserMethods {
 	 */
 	public static void edituser(String pw, String mail, String addr, String mbl) {
 
-		Connection conn = DBconnect.connect();
+		Connection conn = null;
+		try {
+			conn = DBconnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		String user = MainMethods.loggeduser();
 
 		if (user != null) {
 
-			String query1 = "UPDATE users SET password=?, email=?, address=?, mobile=? WHERE username=?";
-
 			try {
+
+				String query1 = "UPDATE users SET password=?, email=?, address=?, mobile=? WHERE username=?";
 				PreparedStatement statement1 = conn.prepareStatement(query1);
 
 				statement1.setString(1, pw);
@@ -114,34 +61,29 @@ public class UserMethods {
 		} else {
 			@SuppressWarnings("unused")
 			Error error = new Error();
-			;
 		}
 
 		DBconnect.closeconn();
 	}
 
 	/**
-	 * μεθοδος διαγραφης χρηστη
+	 * method of deleting a user
 	 * 
 	 * @param usr
 	 * @param pw
 	 */
 	public static void deleteuser(String usr, String pw) {
 
-		Connection conn = DBconnect.connect();
-		String query = "SELECT username, password FROM users WHERE username=?";
-
 		try {
-
+			Connection conn = DBconnect.connect();
+			String query = "SELECT username, password FROM users WHERE username=?";
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, usr);
-			statement.setString(2, pw);
 			statement.execute();
 
 			ResultSet rs = statement.executeQuery();
 
 			String user = null;
-			@SuppressWarnings("unused")
 			String pass = null;
 
 			while (rs.next()) {
@@ -153,14 +95,20 @@ public class UserMethods {
 			if (user != null) {
 
 				String query1 = "DELETE FROM users WHERE username=? AND password=?";
+				String query2 = "DELETE FROM paymentinfo WHERE username = ?";
 
 				try {
 
 					PreparedStatement statement1 = conn.prepareStatement(query1);
-					statement1.setString(1, usr);
-					statement1.setString(2, pw);
+					PreparedStatement statement2 = conn.prepareStatement(query2);
+
+					statement1.setString(1, user);
+					statement1.setString(2, pass);
+
+					statement2.setString(1, user);
 
 					statement1.execute();
+					statement2.execute();
 
 				} catch (SQLException e) {
 
@@ -184,13 +132,19 @@ public class UserMethods {
 	}
 
 	/**
-	 * μεθοδος εισαγωγης στοιχειων χρεωσης/πιστωσης
+	 * method of inserting payment information
 	 * 
 	 * @param card
 	 * @param bank
 	 */
 	public static void payment(String card, String bank) {
-		Connection conn = DBconnect.connect();
+		Connection conn = null;
+		try {
+			conn = DBconnect.connect();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String user = MainMethods.loggeduser();
 		if (user != null) {
 
@@ -220,19 +174,20 @@ public class UserMethods {
 	}
 
 	/**
-	 * μεθοδος εμφανισης στοιχειων συνδεδεμενου χρηστη
+	 * χρηστη method that shows the connected user information
 	 * 
 	 * @param table
 	 */
 	public static void viewinfo(JTable table) {
-		Connection conn = DBconnect.connect();
 
 		String[] tableColumnsName = { "Username", "Email", "Address", "Mobile", "Rating" };
 		DefaultTableModel aModel = (DefaultTableModel) table.getModel();
 		aModel.setColumnIdentifiers(tableColumnsName);
 
-		String user = MainMethods.loggeduser();
 		try {
+
+			Connection conn = DBconnect.connect();
+			String user = MainMethods.loggeduser();
 			String query = "SELECT username, email, address, mobile, score FROM users WHERE username =?";
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, user);
@@ -259,18 +214,17 @@ public class UserMethods {
 	}
 
 	/**
-	 * μεθοδος που αυξανει τη βαθμολογια του επιλεγμενου χρηστη κανα 1(μεγιστο
-	 * 100)
+	 * method that increases the score of selected user by 1(max 100)
 	 * 
 	 * @param user
 	 */
 	public static void rating(String user) {
-		Connection conn = DBconnect.connect();
 
 		int score = 0;
 
 		try {
 
+			Connection conn = DBconnect.connect();
 			String query = "SELECT score FROM users WHERE username = ?";
 			PreparedStatement statement = conn.prepareStatement(query);
 
@@ -279,7 +233,7 @@ public class UserMethods {
 
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
-				score = Integer.parseInt(rs.getString("score"));
+				score = rs.getInt("score");
 			}
 
 			if (user != null && score < 100) {
@@ -314,8 +268,7 @@ public class UserMethods {
 	}
 
 	/**
-	 * μεθοδος που εμφανιζει λιστα με τους χρηστες και τις βαθμολογιες τους σε
-	 * πινακα
+	 * method that shows the user list and their scores on a table
 	 * 
 	 * @param table
 	 */

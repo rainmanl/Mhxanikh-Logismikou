@@ -43,7 +43,7 @@ public class AuctionSearch {
 		JFrame frmAuctionSearch = new JFrame();
 		frmAuctionSearch.setResizable(false);
 		frmAuctionSearch.setTitle("Auction Search");
-		frmAuctionSearch.setBounds(100, 100, 756, 729);
+		frmAuctionSearch.setBounds(100, 100, 744, 729);
 		frmAuctionSearch.getContentPane().setLayout(null);
 		frmAuctionSearch.setLocationRelativeTo(null);
 
@@ -156,8 +156,6 @@ public class AuctionSearch {
 		lblPresssearchTo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPresssearchTo.setBounds(190, 290, 360, 33);
 		frmAuctionSearch.getContentPane().add(lblPresssearchTo);
-
-		// final String tablevalue = null;
 
 		table = new JTable();
 		table.setBounds(109, 111, 223, 168);
