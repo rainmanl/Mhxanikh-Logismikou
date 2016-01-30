@@ -235,7 +235,6 @@ public class Admin {
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				model.setRowCount(0);
 				AuctionMethods.catlist(table);
-
 			}
 		});
 		btnUpdateList.setBounds(164, 238, 109, 27);

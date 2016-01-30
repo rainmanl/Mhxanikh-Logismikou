@@ -186,8 +186,8 @@ public class AdminMethods {
 	}
 
 	/**
-	 * here is the method for enabling/disabling the rating function on users
-	 * practically this method, enables or disables the "Rate User" in
+	 * here are the methods for enabling/disabling the rating function on users
+	 * practically this method, enables or disables the "Rate User" button in
 	 * user.User.java
 	 *
 	 */

@@ -5,8 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import user.UserMethods;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -46,7 +44,7 @@ public class UserCreate {
 		textField.setColumns(10);
 		frmCreateNewUser.getContentPane().add(textField);
 
-		textField_1 = new JTextField(); 
+		textField_1 = new JTextField();
 		textField_1.setBounds(251, 90, 170, 30);
 		textField_1.setColumns(10);
 		frmCreateNewUser.getContentPane().add(textField_1);
@@ -97,7 +95,7 @@ public class UserCreate {
 				char[] pw = passwordField.getPassword();
 				String pw1 = new String(pw);
 
-				UserMethods.createuser(user, pw1, mail, addr, mbl);
+				MainMethods.createuser(user, pw1, mail, addr, mbl);
 
 				frmCreateNewUser.dispose();
 
