@@ -107,7 +107,7 @@ public class AdminStats {
 		frmStatistics.getContentPane().add(txtpnCreatorowner);
 
 		JTextPane txtpnTtl = new JTextPane();
-		txtpnTtl.setText("TTL(in days)");
+		txtpnTtl.setText("End Date");
 		txtpnTtl.setForeground(Color.WHITE);
 		txtpnTtl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtpnTtl.setEditable(false);

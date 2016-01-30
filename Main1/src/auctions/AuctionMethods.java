@@ -22,7 +22,7 @@ public class AuctionMethods {
 	 * @param startbid
 	 * @param category
 	 */
-	public static void createauction(String itemname, String startbid, String category, long date) {
+	public static void createauction(String itemname, String startbid, String category, String date, long date2) {
 		Connection conn = null;
 		PreparedStatement statement = null;
 		PreparedStatement statement1 = null;
@@ -34,14 +34,15 @@ public class AuctionMethods {
 
 			statement1.execute();
 
-			String query = "INSERT INTO auctions (name, category, startbid, creator, time) VALUES (?,?,?,?,?)";
+			String query = "INSERT INTO auctions (name, category, startbid, creator, date, time) VALUES (?,?,?,?,?,?)";
 			statement = conn.prepareStatement(query);
 
 			statement.setString(1, itemname);
 			statement.setString(2, category);
 			statement.setString(3, startbid);
 			statement.setString(4, user);
-			statement.setLong(5, date);
+			statement.setString(5, date);
+			statement.setLong(6, date2);
 
 			statement.execute();
 
@@ -316,7 +317,7 @@ public class AuctionMethods {
 
 		Connection conn = null;
 
-		String[] tableColumnsName = { "Auction names", "Starting Bid", "Time Remaining", "Creator", "Higher Bid" };
+		String[] tableColumnsName = { "Auction names", "Starting Bid", "Date", "Creator", "Higher Bid" };
 		DefaultTableModel aModel = (DefaultTableModel) table.getModel();
 		aModel.setColumnIdentifiers(tableColumnsName);
 
@@ -324,7 +325,7 @@ public class AuctionMethods {
 
 			try {
 				conn = DBconnect.connect();
-				String query = "SELECT name, startbid, time, creator, lastbid FROM auctions WHERE category = ?";
+				String query = "SELECT name, startbid, date, creator, lastbid FROM auctions WHERE category = ?";
 				PreparedStatement statement = conn.prepareStatement(query);
 				statement.setString(1, category);
 				statement.execute();

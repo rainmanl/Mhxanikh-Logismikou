@@ -63,7 +63,7 @@ public class Admin {
 		JPanel panel = new JPanel();
 		panel.setToolTipText("Create or Delete Categories");
 		panel.setBorder(new TitledBorder(null, "Categories", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 24, 282, 145);
+		panel.setBounds(10, 24, 225, 145);
 		frmAdmin.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -76,17 +76,17 @@ public class Admin {
 				textField.setText(null);
 			}
 		});
-		btnCreate.setBounds(172, 38, 100, 30);
+		btnCreate.setBounds(124, 38, 88, 30);
 		panel.add(btnCreate);
 
 		textField = new JTextField();
-		textField.setBounds(10, 38, 152, 30);
+		textField.setBounds(10, 38, 104, 30);
 		panel.add(textField);
 		textField.setColumns(10);
 
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(10, 79, 152, 30);
+		textField_2.setBounds(10, 79, 104, 30);
 		panel.add(textField_2);
 
 		JButton button = new JButton("Delete");
@@ -98,7 +98,7 @@ public class Admin {
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		button.setBounds(172, 79, 100, 30);
+		button.setBounds(124, 79, 88, 30);
 		panel.add(button);
 
 		JButton btnLogot = new JButton("Log Out");
@@ -128,7 +128,7 @@ public class Admin {
 		panel_1.setToolTipText("Set auction time limit");
 		panel_1.setBorder(
 				new TitledBorder(null, "Auction Time limit", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(302, 24, 127, 145);
+		panel_1.setBounds(245, 24, 184, 145);
 		frmAdmin.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -147,22 +147,22 @@ public class Admin {
 				}
 				long date3 = date2.getTime();
 
-				AdminMethods.timeset(date3);
+				AdminMethods.timeset(date, date3);
 				textField_3.setText(null);
 
 			}
 		});
 		btnSetTime.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnSetTime.setBounds(10, 28, 107, 30);
+		btnSetTime.setBounds(10, 28, 164, 30);
 		panel_1.add(btnSetTime);
 
 		textField_3 = new JTextField();
-		textField_3.setBounds(10, 104, 107, 30);
+		textField_3.setBounds(10, 104, 164, 30);
 		panel_1.add(textField_3);
 		textField_3.setColumns(10);
 
-		JLabel lblinDays = new JLabel("(in Days)");
-		lblinDays.setBounds(10, 66, 107, 27);
+		JLabel lblinDays = new JLabel("(in Format: January 1, 2000)");
+		lblinDays.setBounds(10, 66, 164, 27);
 		panel_1.add(lblinDays);
 		lblinDays.setHorizontalAlignment(SwingConstants.CENTER);
 		lblinDays.setFont(new Font("Tahoma", Font.ITALIC, 11));

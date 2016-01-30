@@ -110,7 +110,7 @@ public class AuctionCreate {
 				}
 				long date3 = date2.getTime();
 
-				AuctionMethods.createauction(itemname, bid, category, date3);
+				AuctionMethods.createauction(itemname, bid, category, date, date3);
 
 				frmCreateAuction.dispose();
 
@@ -146,10 +146,10 @@ public class AuctionCreate {
 		textField_3.setBounds(140, 172, 138, 30);
 		frmCreateAuction.getContentPane().add(textField_3);
 
-		lblinDaysDefault = new JLabel("(in Days. Default is 7)");
+		lblinDaysDefault = new JLabel("(in Format: January 1, 2000)");
 		lblinDaysDefault.setHorizontalAlignment(SwingConstants.CENTER);
 		lblinDaysDefault.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		lblinDaysDefault.setBounds(10, 202, 120, 19);
+		lblinDaysDefault.setBounds(10, 206, 164, 19);
 		frmCreateAuction.getContentPane().add(lblinDaysDefault);
 
 		frmCreateAuction.setVisible(true);

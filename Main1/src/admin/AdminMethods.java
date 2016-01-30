@@ -98,19 +98,22 @@ public class AdminMethods {
 	}
 
 	/**
-	 * method of editing/setting the duration of the auctions
+	 * method of editing/setting the duration of all the auctions except the
+	 * sample auction
 	 * 
 	 * @param time
 	 */
-	public static void timeset(long date) {
+	public static void timeset(String date, long date2) {
 
 		try {
 			Connection conn = DBconnect.connect();
-			String query = "UPDATE auctions SET time=?";
+			String query = "UPDATE auctions SET date=? , time=? WHERE id NOT LIKE '1' ";
 			PreparedStatement statement;
 
 			statement = conn.prepareStatement(query);
-			statement.setLong(1, date);
+			statement.setString(1, date);
+			statement.setLong(2, date2);
+
 			statement.execute();
 
 		} catch (SQLException e1) {
@@ -134,14 +137,14 @@ public class AdminMethods {
 		String query = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		String[] tableColumnsName = { "Auction Names", "Category", "Start Bid", "Time", "Creator", "Last Bidder",
+		String[] tableColumnsName = { "Auction Names", "Category", "Start Bid", "Date", "Creator", "Last Bidder",
 				"Last Bid", "Sum" };
 		DefaultTableModel aModel = (DefaultTableModel) table.getModel();
 		aModel.setColumnIdentifiers(tableColumnsName);
 
 		try {
 			conn = DBconnect.connect();
-			query = "SELECT name, category, startbid, time, creator, lastbidder, lastbid, sumofbidders FROM auctions";
+			query = "SELECT name, category, startbid, date, creator, lastbidder, lastbid, sumofbidders FROM auctions";
 
 			statement = conn.prepareStatement(query);
 
@@ -154,6 +157,9 @@ public class AdminMethods {
 			while (rs.next()) {
 				Object[] objects = new Object[colNo];
 				for (int i = 0; i < colNo; i++) {
+					if (i == 3) {
+
+					}
 					objects[i] = rs.getObject(i + 1);
 				}
 				aModel.addRow(objects);

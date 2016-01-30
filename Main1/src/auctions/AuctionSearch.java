@@ -120,7 +120,7 @@ public class AuctionSearch {
 		txtpnTimeRemaining.setBackground(Color.DARK_GRAY);
 		txtpnTimeRemaining.setEditable(false);
 		txtpnTimeRemaining.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtpnTimeRemaining.setText("Time Left (days)");
+		txtpnTimeRemaining.setText("End Date");
 		txtpnTimeRemaining.setBounds(298, 418, 144, 19);
 		frmAuctionSearch.getContentPane().add(txtpnTimeRemaining);
 
