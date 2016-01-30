@@ -14,8 +14,7 @@ public class DBconnect {
 	 */
 	public static Connection connect() throws SQLException {
 
-		conn = DriverManager.getConnection("jdbc:mysql://192.168.2.6:3306/mixaniki", "pro", "mixaniki");
-		// 91.138.136.187 public server ip | 192.168.2.6 subnet server ip
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mixaniki", "pro", "mixaniki");
 
 		return conn;
 	}
