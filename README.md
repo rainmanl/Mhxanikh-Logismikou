@@ -6,7 +6,9 @@ Software Mechanics 2015-2016
 -----------TEAM 14-----------
 
 KAMPOUROGLOU SEBASTIAN
+
 KONIDAS CONSTINTINE
+
 LAMBRAKIS JOHN
 
 ---PROJECTS---
@@ -18,12 +20,15 @@ PROJECT Server1: is an application of our own that checks the database for the e
 
 
 --------ΕΛΛΗΝΙΚΑ--------
+
 ΜΗΧΑΝΙΚΗ ΛΟΓΙΣΜΙΚΟΥ 2015-2016
 
 -----------TEAM 14-----------
 
 ΚΑΜΠΟΥΡΟΓΛΟΥ ΣΕΒΑΣΤΙΑΝΟΣ
+
 ΚΟΝΙΔΑΣ ΚΩΝΣΤΑΝΤΙΝΟΣ
+
 ΛΑΜΠΡΑΚΗΣ ΙΩΑΝΝΗΣ
 
 ---PROJECTS---
